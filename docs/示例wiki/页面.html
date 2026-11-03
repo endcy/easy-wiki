@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>HTML 演示页面</title>
+<link rel="stylesheet" href="./页面.css">
+</head>
+<body>
+<div class="card">
+  <h1>HTML 演示页面</h1>
+  <p>这个 HTML 文件通过 <code>&lt;link rel="stylesheet" href="./页面.css"&gt;</code>
+     引用了 <strong>同目录</strong> 下的样式表，验证「上下文目录样式」能力。</p>
+  <button class="btn" onclick="alert('上下文目录的 JS 也能正常工作')">点我试试</button>
+</div>
+<script src="./页面.js"></script>
+</body>
+</html>

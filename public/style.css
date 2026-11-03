@@ -1,0 +1,665 @@
+/* ─── 全局变量（亮色） ─── */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --text-dim: #6b7280;
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --hover: #f1f5f9;
+  --topbar-bg: #111827;
+  --topbar-text: #f9fafb;
+  --divider: #d1d5db;
+  --divider-hover: #2563eb;
+  --tab-bg: #eef1f5;
+  --tab-active-bg: #ffffff;
+  --tab-active-text: #1f2937;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --danger: #dc2626;
+  --success: #16a34a;
+}
+
+/* ─── 暗色变量 ─── */
+body.dark {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --border: #334155;
+  --text: #e5e7eb;
+  --text-dim: #94a3b8;
+  --accent: #60a5fa;
+  --accent-soft: #1e3a8a;
+  --hover: #334155;
+  --topbar-bg: #0b1220;
+  --topbar-text: #f1f5f9;
+  --divider: #475569;
+  --divider-hover: #60a5fa;
+  --tab-bg: #334155;
+  --tab-active-bg: #1e293b;
+  --tab-active-text: #f1f5f9;
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── 顶栏 ─── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 0 14px;
+  height: 46px;
+  background: linear-gradient(180deg, var(--topbar-bg) 0%, color-mix(in srgb, var(--topbar-bg) 88%, black) 100%);
+  color: var(--topbar-text);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    0 0 18px -8px var(--accent);              /* 顶栏底部柔和辉光 */
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  flex-shrink: 0;
+  position: relative;
+}
+.topbar::after {                                 /* 顶栏底部一条细的渐变光线 */
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 40%, transparent) 30%,
+    color-mix(in srgb, var(--accent) 60%, transparent) 50%,
+    color-mix(in srgb, var(--accent) 40%, transparent) 70%,
+    transparent 100%);
+  pointer-events: none;
+}
+.topbar-left, .topbar-center, .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topbar-center { flex: 1 1 auto; justify-content: center; }
+.topbar-right { flex: 0 0 auto; }
+
+.brand {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  color: var(--topbar-text);
+}
+.brand #brand-title {
+  background: linear-gradient(135deg, var(--topbar-text) 40%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#search {
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-size: 13px;
+  width: min(360px, 40vw);
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--topbar-text);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+#search::placeholder { color: rgba(255, 255, 255, 0.45); }
+#search:focus {
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--topbar-text);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+  position: relative;
+}
+.icon-btn:hover {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: 0 0 10px -2px var(--accent);
+  color: var(--accent);
+}
+.icon-btn:active { transform: scale(0.92); }
+
+/* ─── GitHub 图标 ─── */
+.github-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--topbar-text);
+}
+.github-icon svg {
+  display: block;
+  transition: transform 0.2s;
+}
+.github-icon:hover svg {
+  transform: scale(1.12);
+}
+
+.edit-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s, background 0.2s;
+  box-shadow: 0 0 0 0 var(--accent);
+}
+.edit-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 14px -2px var(--accent);
+}
+.edit-btn:active { transform: scale(0.97); }
+.edit-btn.editing { background: var(--success); border-color: var(--success); }
+
+button {
+  padding: 6px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--topbar-text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+button:hover { background: rgba(255, 255, 255, 0.18); }
+button.primary { background: var(--accent); border-color: var(--accent); }
+button.primary:hover { filter: brightness(1.1); }
+
+.auto {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ─── 主体：侧栏 + 内容 ─── */
+.main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 侧栏 */
+.sidebar {
+  flex: 0 0 auto;
+  width: 280px;
+  min-width: 180px;
+  max-width: 500px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.25s ease, min-width 0.25s ease;
+}
+.sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  border-right: none;
+  overflow: hidden;
+}
+
+.sidebar-tree {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 6px;
+}
+
+.sidebar-foot {
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--sidebar-border);
+  background: linear-gradient(180deg, var(--panel) 0%, color-mix(in srgb, var(--panel) 90%, var(--accent)) 100%);
+}
+
+/* ─── 滚动条美化 ─── */
+.sidebar-tree::-webkit-scrollbar,
+.tab-content ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.sidebar-tree::-webkit-scrollbar-track,
+.tab-content ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-tree::-webkit-scrollbar-thumb,
+.tab-content ::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 4px;
+}
+.sidebar-tree::-webkit-scrollbar-thumb:hover,
+.tab-content ::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* ─── 选中文本颜色 ─── */
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--text);
+}
+
+/* ─── 侧栏树 tooltip 样式（多行 title 换行在某些浏览器不生效，但无伤大雅）── */
+.tree .row[title] { cursor: pointer; }
+
+/* 可拖拽分割条 */
+.divider {
+  flex: 0 0 auto;
+  width: 4px;
+  cursor: col-resize;
+  background: var(--divider);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.divider:hover, .divider.dragging {
+  background: var(--accent);
+  box-shadow: 0 0 8px 0 var(--accent);
+}
+.sidebar.collapsed + .divider { display: none; }
+
+/* 拖拽期间禁用 sidebar 的 width transition，避免粘滞 */
+.sidebar.dragging {
+  transition: none !important;
+}
+
+/* 拖拽遮罩：覆盖整个视口，防止 iframe / 子元素抢走 mouse 事件 */
+.drag-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  cursor: col-resize;
+  background: transparent;
+}
+
+/* 内容区 */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ─── Tab 栏 ─── */
+.tab-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 0 8px;
+  height: 38px;
+  background: linear-gradient(180deg, var(--tab-bg) 0%, color-mix(in srgb, var(--tab-bg) 92%, black) 100%);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+  position: relative;
+}
+.tab-bar::after {                          /* tab-bar 底部一条细的渐变光线 */
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 25%, transparent) 50%,
+    transparent 100%);
+  pointer-events: none;
+}
+.tab-bar::-webkit-scrollbar { height: 4px; }
+.tab-bar::-webkit-scrollbar-thumb { background: var(--divider); }
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 5px;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 220px;
+  transition: background 0.12s, color 0.12s;
+}
+.tab:hover { background: var(--hover); color: var(--text); }
+.tab.active {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  border-color: var(--border);
+  font-weight: 600;
+  position: relative;
+  top: 1px;
+  box-shadow:
+    inset 0 2px 0 0 var(--accent),        /* 顶部彩色指示条 */
+    0 -2px 10px -4px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.tab .tab-icon { font-size: 13px; }
+.tab .tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+.tab .tab-close {
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 3px;
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.tab .tab-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--danger);
+  box-shadow: 0 0 6px -1px var(--danger);
+}
+
+.tab-editing {
+  font-style: italic;
+  color: var(--success);
+}
+
+/* ─── Tab 内容区 ─── */
+.tab-content {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  background: var(--panel);
+}
+
+.doc-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--panel);
+  display: none;
+}
+.doc-iframe.active { display: block; }
+
+.edit-area {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--panel);
+}
+.edit-area.active { display: flex; }
+
+.edit-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--tab-bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.edit-toolbar .edit-path { flex: 1; font-family: monospace; font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+.edit-toolbar button {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.edit-toolbar button.save {
+  background: var(--success);
+  color: #fff;
+  border-color: var(--success);
+}
+.edit-toolbar button.cancel {
+  background: var(--panel);
+}
+
+.edit-textarea {
+  flex: 1;
+  width: 100%;
+  padding: 16px 18px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--panel);
+  color: var(--text);
+  tab-size: 2;
+}
+
+/* 空状态 */
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  font-size: 14px;
+  text-align: center;
+  padding: 40px;
+}
+.empty-state .big {
+  font-size: 56px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+  animation: empty-pulse 2.8s ease-in-out infinite;
+}
+@keyframes empty-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.05); }
+}
+
+/* ─── 文件树 ─── */
+.tree .row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, padding-left 0.15s, color 0.15s;
+  font-size: 13px;
+  border-left: 2px solid transparent;     /* 预留高亮条位 */
+}
+.tree .row:hover {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 100%);
+  border-left-color: var(--accent);
+  padding-left: 12px;                     /* hover 时稍微右移 */
+}
+.tree .row .icon { flex: 0 0 auto; font-size: 14px; }
+.tree .row .name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; }
+.tree .row .name.hit { color: var(--accent); font-weight: 600; text-shadow: 0 0 8px -2px var(--accent); }
+.tree .row .meta {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-left: 4px;
+  opacity: 0.7;
+}
+.tree .row.dir { font-weight: 600; }
+.tree .row.dir > .icon { color: var(--accent); }
+.tree .children {
+  border-left: 1px dashed color-mix(in srgb, var(--accent) 25%, var(--border));
+  margin-left: 13px;
+}
+.tree .error { padding: 20px; text-align: center; color: var(--danger); }
+
+/* ─── 密码弹窗 ─── */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: modal-fade-in 0.15s ease-out;
+}
+.modal[hidden] { display: none; }
+.modal-card {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 24px 28px;
+  min-width: 320px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px -8px var(--accent);
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  animation: modal-scale-in 0.18s ease-out;
+}
+.modal-card h3 {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+.modal-card input[type="password"],
+.modal-card input[type="text"] {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+.modal-card input:focus { border-color: var(--accent); }
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.modal-actions button {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.modal-actions button.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.modal-error {
+  color: var(--danger);
+  font-size: 12px;
+  margin-top: 8px;
+  min-height: 16px;
+}
+
+/* ─── Toast 提示 ─── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--topbar-bg) 0%, color-mix(in srgb, var(--topbar-bg) 70%, var(--accent)) 100%);
+  color: var(--topbar-text);
+  font-size: 13px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.25),
+    0 0 16px -4px var(--accent);
+  z-index: 200;
+  animation: toast-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.toast.success {
+  background: linear-gradient(135deg, var(--success) 0%, color-mix(in srgb, var(--success) 70%, #16a34a) 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 16px -4px var(--success);
+}
+.toast.error {
+  background: linear-gradient(135deg, var(--danger) 0%, color-mix(in srgb, var(--danger) 70%, #dc2626) 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 16px -4px var(--danger);
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 24px) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ─── 右键上下文菜单 ─── */
+.ctx-menu {
+  position: fixed;
+  z-index: 200;
+  min-width: 160px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 0;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  animation: ctx-fade-in 0.12s ease-out;
+}
+.ctx-item {
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.12s, color 0.12s;
+  white-space: nowrap;
+}
+.ctx-item:hover {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+@keyframes ctx-fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

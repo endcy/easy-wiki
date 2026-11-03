@@ -1,0 +1,34 @@
+{
+  "name": "easy-wiki",
+  "version": "1.0.0",
+  "description": "动态文件浏览与文档展示服务：多 wiki、多文件夹浏览，实时感知文件增删改，支持 md / text / html 展示",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "wiki",
+    "file-browser",
+    "markdown",
+    "docs",
+    "node"
+  ],
+  "author": "endcy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/endcy/easy-wiki.git"
+  },
+  "bugs": {
+    "url": "https://github.com/endcy/easy-wiki/issues"
+  },
+  "homepage": "https://github.com/endcy/easy-wiki#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.1.0"
+  }
+}

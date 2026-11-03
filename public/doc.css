@@ -1,0 +1,220 @@
+/* ─── 文档查看页样式（md / text 共用） ─── */
+:root {
+  --bg: #ffffff;
+  --text: #1f2937;
+  --text-dim: #6b7280;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --code-bg: #f6f8fa;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ─── 顶部工具条 ─── */
+.doc-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+  color: #f9fafb;
+  border-bottom: 1px solid #1f2937;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    0 0 18px -8px #2563eb;
+}
+.doc-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(37, 99, 235, 0.5) 30%,
+    rgba(37, 99, 235, 0.7) 50%,
+    rgba(37, 99, 235, 0.5) 70%,
+    transparent 100%);
+  pointer-events: none;
+}
+.doc-header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.doc-header a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+.doc-header a:hover { text-decoration: underline; }
+.doc-back { font-weight: 600; white-space: nowrap; }
+.doc-crumbs { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #d1d5db; }
+.doc-crumbs a { color: #d1d5db; }
+.doc-crumbs .sep { margin: 0 6px; color: #6b7280; }
+.doc-crumbs .cur { color: #f9fafb; font-weight: 600; }
+.doc-meta { color: #9ca3af; white-space: nowrap; }
+.doc-raw { white-space: nowrap; }
+
+/* ─── 正文 ─── */
+.doc-body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+.doc-title {
+  font-size: 28px;
+  line-height: 1.3;
+  margin: 0 0 8px;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--accent) 0%, transparent 60%) 1;
+  padding-bottom: 16px;
+}
+
+.doc-tags { margin: 8px 0 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+.doc-tag {
+  font-size: 12px;
+  color: var(--accent);
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 2px 10px;
+}
+
+/* ─── Markdown 内容 ─── */
+.doc-content { font-size: 15px; }
+
+.doc-content h1 { font-size: 1.9em; margin: 1.2em 0 0.6em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
+.doc-content h2 { font-size: 1.5em; margin: 1.4em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
+.doc-content h3 { font-size: 1.25em; margin: 1.3em 0 0.4em; }
+.doc-content h4 { font-size: 1.1em; margin: 1.2em 0 0.3em; }
+.doc-content h5, .doc-content h6 { font-size: 1em; margin: 1em 0 0.3em; }
+
+.doc-content p { margin: 0.7em 0; }
+.doc-content a { color: var(--accent); text-decoration: none; }
+.doc-content a:hover { text-decoration: underline; }
+.doc-content img { max-width: 100%; height: auto; border-radius: 6px; }
+
+.doc-content ul, .doc-content ol { padding-left: 1.6em; margin: 0.6em 0; }
+.doc-content li { margin: 0.25em 0; }
+.doc-content blockquote {
+  margin: 0.8em 0;
+  padding: 0.4em 1em;
+  border-left: 4px solid var(--accent);
+  color: #475569;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 6%, transparent) 0%, #f8fafc 100%);
+  border-radius: 0 6px 6px 0;
+}
+.doc-content code {
+  background: var(--code-bg);
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.9em;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+.doc-content pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow: auto;
+  line-height: 1.55;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.doc-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+}
+
+.doc-content table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+.doc-content th, .doc-content td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.doc-content th { background: #f8fafc; font-weight: 600; }
+.doc-content tr:nth-child(even) td { background: #fafbfc; }
+
+.doc-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border) 20%, var(--border) 80%, transparent 100%);
+  margin: 1.6em 0;
+}
+
+/* ─── 纯文本查看（JSON / TXT / LOG 等） ─── */
+pre.text-view {
+  background: #0b1220 !important;   /* 深蓝黑底，!important 覆盖 .doc-content pre */
+  color: #f1f5f9 !important;        /* 近白文字，对比度拉满 */
+  border-radius: 8px;
+  padding: 20px 24px;
+  overflow: auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  white-space: pre;
+  border-left: 3px solid var(--accent, #2563eb);   /* 左侧科技感彩色条 */
+  box-shadow:
+    inset 0 0 30px rgba(15, 23, 42, 0.5),         /* 内阴影增加纵深感 */
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 0 1px rgba(241, 245, 249, 0.15); /* 极轻微的辉光，让字体更清晰 */
+  min-height: 80px;
+  max-width: 100%;
+}
+
+/* ─── text-view 语法高亮（深底高对比，强制覆盖 hljs 主题的白底） ─── */
+.text-view.hljs {
+  background: #0b1220 !important;   /* 关键：覆盖 github.css 的 .hljs 白底 */
+  color: #f8fafc !important;        /* 默认文字：近纯白 */
+}
+.text-view.hljs code {
+  background: transparent !important;
+  color: #f8fafc !important;
+}
+.text-view .hljs-keyword,
+.text-view .hljs-selector-tag,
+.text-view .hljs-meta .hljs-keyword { color: #c084fc !important; }    /* 关键字：紫 */
+.text-view .hljs-string,
+.text-view .hljs-addition { color: #86efac !important; }               /* 字符串：绿 */
+.text-view .hljs-number,
+.text-view .hljs-literal { color: #fbbf24 !important; }                /* 数字/布尔/null：琥珀 */
+.text-view .hljs-attr,
+.text-view .hljs-name,
+.text-view .hljs-attribute { color: #7dd3fc !important; }              /* JSON key / 属性名：亮蓝 */
+.text-view .hljs-built_in,
+.text-view .hljs-type { color: #f472b6 !important; }                   /* 内置/类型：粉 */
+.text-view .hljs-comment,
+.text-view .hljs-quote { color: #8b949e !important; font-style: italic; }  /* 注释：灰斜体 */
+.text-view .hljs-punctuation { color: #cbd5e1 !important; }            /* 标点：亮灰白 */
+.text-view .hljs-title,
+.text-view .hljs-function { color: #38bdf8 !important; }               /* 函数名：青蓝 */
+.text-view .hljs-variable,
+.text-view .hljs-template-variable { color: #fb923c !important; }      /* 变量：橙 */
+.text-view .hljs-regexp { color: #f87171 !important; }                 /* 正则：红 */
+.text-view .hljs-symbol,
+.text-view .hljs-bullet { color: #a78bfa !important; }                 /* 符号：淡紫 */
+.text-view .hljs-params { color: #e2e8f0 !important; }                 /* 参数：亮 */
+
