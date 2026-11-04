@@ -8,6 +8,13 @@
 set -e
 cd "$(dirname "$0")"
 
+# 自动安装依赖（首次运行）
+if [ ! -d "node_modules" ]; then
+    echo "==> 首次运行，安装依赖..."
+    npm install
+    echo "    依赖安装完成 ✓"
+fi
+
 # 端口（从 web.config 读，缺省 82）
 PORT=$(node -e "try{const c=require('./web.config');console.log(c.port||82)}catch(e){console.log(82)}" 2>/dev/null || echo 82)
 # node 读取 web.config 会失败（带注释），改用 grep 兜底
